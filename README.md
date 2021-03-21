@@ -1,2 +1,0 @@
-# skillcity
-skillcity
