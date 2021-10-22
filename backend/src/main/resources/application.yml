@@ -1,2 +1,49 @@
 server:
   port: 8888
+
+jwt:
+  header: Authorization
+  # This token must be encoded using Base64 with mininum 88 Bits (you can type `echo 'secret-key'|base64` on your command line)
+  base64-secret: ZmQ0ZGI5NjQ0MDQwY2I4MjMxY2Y3ZmI3MjdhN2ZmMjNhODViOTg1ZGE0NTBjMGM4NDA5NzYxMjdjOWMwYWRmZTBlZjlhNGY3ZTg4Y2U3YTE1ODVkZDU5Y2Y3OGYwZWE1NzUzNWQ2YjFjZDc0NGMxZWU2MmQ3MjY1NzJmNTE0MzI=
+  # token is valid 24 hours
+  token-validity-in-seconds: 86400
+  # valid 30 hours
+  token-validity-in-seconds-for-remember-me: 108000
+  route:
+    authentication:
+      path: auth
+      refresh: refresh
+
+# Данные для получения JWT
+auth:
+  username: admin
+  password: admin
+
+# Отладка в консоли
+logging:
+  level:
+    ROOT: INFO
+    org.edu.skillcity: DEBUG
+    org.springframework.security: DEBUG
+    org.springframework.boot.autoconfigure: ERROR
+
+# Отладка в консоли
+debug: true
+
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/skillcity
+    username: skillcity
+    password: skillcity
+
+# Specify relative path
+uploadFilePath: 'src/main/resources/static/uploads'
+# Specify full path
+uploadPathFull: 'C:\Programming\skillcity\backend\src\main\resources\static\uploads\'
