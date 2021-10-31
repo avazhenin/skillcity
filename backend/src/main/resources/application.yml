@@ -39,9 +39,9 @@ spring:
         dialect: org.hibernate.dialect.PostgreSQLDialect
   datasource:
     driver-class-name: org.postgresql.Driver
-    url: jdbc:postgresql://localhost:5432/skillcity
-    username: skillcity
-    password: skillcity
+    url: ${SKILLCITY_DATABASE_URL}
+    username: ${SKILLCITY_DATABASE_USER}
+    password: ${SKILLCITY_DATABASE_PWD}
 
 # Specify relative path
 uploadFilePath: 'src/main/resources/static/uploads'

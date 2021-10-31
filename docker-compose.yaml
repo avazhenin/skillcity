@@ -1,0 +1,38 @@
+version: "3"
+services:
+  frontend:
+    container_name: skillcity_frontend
+    build:    
+      context: ./frontend/skillcity
+      dockerfile: Dockerfile    
+    ports:
+      - "8080:3000"     
+    depends_on: 
+      - database
+      - backend            
+    volumes:
+      - ./volumes/frontend:/usr/app/frontend      
+  backend:
+    container_name: skillcity_backend
+    build:    
+      context: ./backend
+      dockerfile: Dockerfile    
+    env_file: ./backend/env.list
+    ports:
+      - "8888:8888"    
+    depends_on: 
+      - database   
+    volumes:
+      - ./volumes/backend:/usr/app/backend 
+  database:
+    container_name: skillcity_db
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: "skillcity"
+      POSTGRES_USER: "skillcity"
+      POSTGRES_PASSWORD: "skillcity"
+      PGDATA: "/usr/app/postgresql/data/pgdata"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./volumes/database:/usr/app/postgresql/data/pgdata
