@@ -10,5 +10,5 @@ RUN mvn verify clean --fail-never
 COPY . /app
 RUN mvn -v
 RUN mvn clean package -DskipTests
-COPY ./target/*.jar /app/app.jar
+RUN cp /app/target/*.jar /app/app.jar
 ENTRYPOINT ["java","-jar","/app/app.jar"]
