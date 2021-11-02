@@ -1,17 +1,21 @@
 version: "3"
+volumes:
+  maven-repo:
 services:
   frontend:
     container_name: skillcity_frontend
     build:    
       context: ./frontend/skillcity
       dockerfile: Dockerfile    
+    env_file: ./frontend/skillcity/env.list
     ports:
-      - "8080:3000"     
+      - "2222:3000"     
     depends_on: 
       - database
       - backend            
     volumes:
       - ./volumes/frontend:/usr/app/frontend      
+      - maven-repo:/root/.m2
   backend:
     container_name: skillcity_backend
     build:    

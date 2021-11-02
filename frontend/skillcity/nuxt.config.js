@@ -20,6 +20,10 @@ export default {
     ]
   },
 
+  router: {
+    base: '/1121'
+  },
+
   env: {
     page_type: {
       news: 'news',
