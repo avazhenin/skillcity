@@ -14,7 +14,7 @@ services:
       - database
       - backend            
     volumes:
-      - ./volumes/frontend:/usr/app/frontend      
+      - ./volumes/frontend:/app/frontend
       - maven-repo:/root/.m2
   backend:
     container_name: skillcity_backend

@@ -1,6 +1,6 @@
 package com.edu.skillcity.service;
 
-import org.springframework.beans.factory.annotation.Value;
+import com.edu.skillcity.config.CustomConstants;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,10 +14,8 @@ import java.util.Collection;
 
 @Service
 public class UserService implements UserDetailsService {
-    @Value("${auth.username}")
-    String username;
-    @Value("${auth.password}")
-    String password;
+    String username = CustomConstants.adminPwd;
+    String password = CustomConstants.adminUsr;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {

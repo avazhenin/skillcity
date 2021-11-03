@@ -1,6 +1,6 @@
 export default function ({app, $axios, store, env}, inject) {
 
-  $axios.setBaseURL('http://localhost:8888/api')
+  $axios.setBaseURL('http://skillcity.kz:8888/api')
 
   let LocalStoragetoken = store.getters['store/getToken']
 

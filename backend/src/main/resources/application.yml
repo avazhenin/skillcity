@@ -14,11 +14,6 @@ jwt:
       path: auth
       refresh: refresh
 
-# Данные для получения JWT
-auth:
-  username: admin
-  password: admin
-
 # Отладка в консоли
 logging:
   level:
@@ -42,8 +37,3 @@ spring:
     url: ${SKILLCITY_DATABASE_URL}
     username: ${SKILLCITY_DATABASE_USER}
     password: ${SKILLCITY_DATABASE_PWD}
-
-# Specify relative path
-uploadFilePath: 'src/main/resources/static/uploads'
-# Specify full path
-uploadPathFull: 'C:\Programming\skillcity\backend\src\main\resources\static\uploads\'
