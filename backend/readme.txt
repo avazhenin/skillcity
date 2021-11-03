@@ -24,3 +24,6 @@ fetch(
 
 ----------------------------- Fetch-DELETE -----------------------------
 fetch('/api/getlist/4',{method: 'DELETE'}).then(result => console.log(result))
+
+insert into pages(id, dscr, image, name, page_type) values(1,null,null,null,'about');
+insert into pages(id, dscr, image, name, page_type) values(4,null,null,null,'contacts');
