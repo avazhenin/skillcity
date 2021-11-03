@@ -27,7 +27,7 @@ services:
     depends_on: 
       - database   
     volumes:
-      - ./volumes/backend:/app/uploads
+      - ./volumes/backend/uploads:/app/uploads
   database:
     container_name: skillcity_db
     image: postgres:latest
