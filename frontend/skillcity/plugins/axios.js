@@ -1,6 +1,8 @@
 export default function ({app, $axios, store, env}, inject) {
 
-  $axios.setBaseURL('http://skillcity.kz:8888/api')
+  // Here specify https://skillcity.kz/api
+  // But Nginx will forward to inner http://localhost:8888/api
+  $axios.setBaseURL('https://skillcity.kz/api')
 
   let LocalStoragetoken = store.getters['store/getToken']
 
