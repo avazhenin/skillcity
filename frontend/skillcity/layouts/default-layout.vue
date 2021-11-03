@@ -128,7 +128,7 @@
           </v-expansion-panels>
           <v-row no-gutters>
             <v-col class="py-4 text-center white--text">
-              {{ new Date().getFullYear() }} — <strong>by avazhenin</strong>
+              {{ new Date().getFullYear() }} <strong>©</strong> <span style="color:white; cursor: pointer" @click="openInNewTab('http://www.linkedin.com/in/anatoliy-vazhenin-10bb9695')">avazhenin</span>
             </v-col>
           </v-row>
         </v-col>
