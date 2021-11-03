@@ -128,7 +128,7 @@
           </v-expansion-panels>
           <v-row no-gutters>
             <v-col class="py-4 text-center white--text">
-              {{ new Date().getFullYear() }} — <strong>Vuetify</strong>
+              {{ new Date().getFullYear() }} — <strong>by avazhenin</strong>
             </v-col>
           </v-row>
         </v-col>
