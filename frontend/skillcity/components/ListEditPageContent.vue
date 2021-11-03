@@ -18,7 +18,7 @@
                         v-model="page_object.text" :set_value="content.text"/>
 
                 <v-list-item-content v-if="content.content_type==page_content_type.picture">
-                  <v-img :src="(file && page_object.id == content.id)?url:`http://localhost:8888/uploads/`+content.text"
+                  <v-img :src="(file && page_object.id == content.id)?url:`https://skillcity.kz/uploads/`+content.text"
                          :contain="true"
                          style="max-height: 400px; max-width: 400px"/>
                 </v-list-item-content>

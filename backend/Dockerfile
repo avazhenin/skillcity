@@ -11,4 +11,5 @@ COPY . /app
 RUN mvn -v
 RUN mvn clean package -DskipTests
 RUN cp /app/target/*.jar /app/app.jar
+RUN mkdir -p /app/uploads
 ENTRYPOINT ["java","-jar","/app/app.jar"]

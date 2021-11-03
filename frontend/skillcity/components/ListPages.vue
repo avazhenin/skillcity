@@ -21,7 +21,7 @@
           <v-card id="object_page"
                   style="cursor: pointer"
                   class="ma-1">
-            <v-img id="page_img" :src="`http://localhost:8888/uploads/`+page.image"/>
+            <v-img id="page_img" :src="`https://skillcity.kz/uploads/`+page.image"/>
             <v-card-subtitle>{{ page.name }}</v-card-subtitle>
             <v-card-text>{{ page.dscr }}</v-card-text>
             <v-card-actions v-if="isAdmin()">

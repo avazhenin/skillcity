@@ -44,7 +44,7 @@
                          class="align-baseline"
                          :contain="true"
                          v-if="!files"
-                         :src="`http://localhost:8888/uploads/`+page.image"
+                         :src="`https://skillcity.kz/uploads/`+page.image"
                   />
                   <v-img id="img1"
                          class="align-baseline"
