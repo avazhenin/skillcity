@@ -21,7 +21,7 @@ export default {
   },
 
   router: {
-    base: '/1121/'
+    base: '/sc1121/'
   },
 
   env: {
