@@ -21,7 +21,7 @@ export default {
   },
 
   router: {
-    base: '/sc1121/'
+    base: process.env.ROUTER_BASE
   },
 
   env: {
