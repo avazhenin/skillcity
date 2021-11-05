@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <v-dialog max-width="500px" :v-scroll="true">
+    <v-dialog max-width="500px" v-model="dialog" :v-scroll="true">
       <template v-slot:activator="{ on, attrs }">
         <v-btn v-bind="attrs"
                v-on="on"
@@ -32,16 +32,34 @@ export default {
   directives: {mask},
   data() {
     return {
+      dialog: false,
       phone_number: ''
     }
   },
   methods: {
     resetPhone() {
+      this.$store.dispatch('constants/setShowSnackbar', false)
       this.phone_number = '+7'
       this.$getScreenType()
     },
     call_back() {
-      alert('Нужен обработчик')
+      let payload = {
+        'type': process.env.notification_type.call_request,
+        'insert_date': new Date(),
+        'viewed_date': null,
+        'status': process.env.notification_status.new,
+        'cell_phone': this.phone_number,
+        'email': null
+      }
+      try {
+        this.$add_set_notification(payload)
+        this.$store.dispatch('constants/setErrorMessage', 'Мы обязательно свяжемся с вами!')
+        this.$store.dispatch('constants/setSnackbarDur', 5 * 1000)
+        this.$store.dispatch('constants/setShowSnackbar', true)
+      } catch (error) {
+      }
+
+      this.dialog = false;
     }
   }
 }

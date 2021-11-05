@@ -1,8 +1,7 @@
 export default function ({app, $axios, store, env}, inject) {
-
   // Here specify https://skillcity.kz/api
   // But Nginx will forward to inner http://localhost:8888/api
-  $axios.setBaseURL('https://skillcity.kz/api')
+  $axios.setBaseURL(env.api_base_url + '/api')
 
   let LocalStoragetoken = store.getters['store/getToken']
 
@@ -10,6 +9,27 @@ export default function ({app, $axios, store, env}, inject) {
     $axios.setToken(LocalStoragetoken, 'Bearer')
     store.commit('store/set_admin', true)
   }
+
+  function showError(error) {
+    console.log(error.response)
+    if (error.response) {
+      store.dispatch('constants/setErrorCode', error.response.data.error)
+      store.dispatch('constants/setErrorMessage', error.response.data.message)
+      store.dispatch('constants/setShowSnackbar', true)
+      store.dispatch('constants/setSnackbarDur', 10 * 1000)
+      if (error.response.status === 401) {
+        if (LocalStoragetoken) store.commit('store/set_token', undefined);
+        forward2LoginPage()
+      }
+    } else {
+      store.dispatch('constants/setErrorMessage', error)
+      store.dispatch('constants/setShowSnackbar', true)
+    }
+    console.log('error=' + error)
+    throw error;
+  }
+
+  inject('showError', showError)
 
   const setAdmin = async (username, password, rememberMe) => {
 
@@ -25,7 +45,7 @@ export default function ({app, $axios, store, env}, inject) {
             return response.data.id_token;
           }
         ).catch(function (error) {
-          console.log(error.response)
+          showError(error)
         })
       if (token != null) {
         store.commit('store/set_token', token);
@@ -60,10 +80,7 @@ export default function ({app, $axios, store, env}, inject) {
         store.dispatch(page_type + '/addPage', response.data);
       })
       .catch((error) => {
-        console.log(error)
-        if (error.response.status === 401) {
-          forward2LoginPage()
-        }
+        showError(error)
       });
   })
 
@@ -90,12 +107,7 @@ export default function ({app, $axios, store, env}, inject) {
         return 0;
       })
       .catch((error) => {
-        console.log(error)
-        if (error.response.status === 401) {
-          forward2LoginPage()
-        } else {
-          return error.response.status;
-        }
+        showError(error)
       });
     return res;
   })
@@ -106,9 +118,7 @@ export default function ({app, $axios, store, env}, inject) {
         store.dispatch(page.page_type + '/deletePage', page);
       })
       .catch(error => {
-        if (error.response.status === 401) {
-          forward2LoginPage()
-        }
+        showError(error)
       });
   })
 
@@ -118,12 +128,7 @@ export default function ({app, $axios, store, env}, inject) {
         store.dispatch(page_type + '/fillPages', response.data);
       })
       .catch((error) => {
-        if (error.response.status === 401) {
-          if (LocalStoragetoken) store.commit('store/set_token', undefined);
-          app.router.push("/")
-          // forward2LoginPage()
-        }
-        return error.response
+        showError(error)
       });
   })
 
@@ -144,11 +149,7 @@ export default function ({app, $axios, store, env}, inject) {
         return 0
       })
       .catch(error => {
-        if (error.response.status === 401) {
-          forward2LoginPage()
-        } else {
-          console.log(error.response)
-        }
+        showError(error)
       })
 
     return result
@@ -171,9 +172,7 @@ export default function ({app, $axios, store, env}, inject) {
         return 0
       })
       .catch(error => {
-        if (error.response.status === 401) {
-          forward2LoginPage()
-        }
+        showError(error)
       })
 
     return result
@@ -189,9 +188,7 @@ export default function ({app, $axios, store, env}, inject) {
         store.dispatch(page_type + '/deletePageContent', content);
       })
       .catch(error => {
-        if (error.response.status === 401) {
-          forward2LoginPage()
-        }
+        showError(error)
       });
   })
 
@@ -201,15 +198,18 @@ export default function ({app, $axios, store, env}, inject) {
           store.dispatch(page_type + '/fillPageContent', response.data);
         })
         .catch(error => {
-          if (error.response && error.response.status === 401) {
-            // forward2LoginPage();
-            if (LocalStoragetoken) store.commit('store/set_token', undefined);
-            app.router.push("/")
-          } else {
-            console.log(error)
-          }
-          return error.response
+          showError(error)
         });
     }
   )
+
+  inject('add_set_notification', async (payload) => {
+    await $axios.post('/notification/add', payload)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(error => {
+        showError(error)
+      });
+  })
 }

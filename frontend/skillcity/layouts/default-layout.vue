@@ -58,6 +58,9 @@
             <v-icon :color="pickColor('#000000','#faf9f9')">{{ s.name }}</v-icon>
           </v-btn>
         </v-col>
+        <v-col class="d-none d-md-flex" v-if="$store.getters['store/isAdmin']">
+          <Notifications :bell_color="pickColor('#000000','#faf9f9')"/>
+        </v-col>
       </v-row>
     </v-app-bar>
 
@@ -128,13 +131,34 @@
           </v-expansion-panels>
           <v-row no-gutters>
             <v-col class="py-4 text-center white--text">
-              {{ new Date().getFullYear() }} <strong>©</strong> <span style="color:white; cursor: pointer" @click="openInNewTab('http://www.linkedin.com/in/anatoliy-vazhenin-10bb9695')">avazhenin</span>
+              {{ new Date().getFullYear() }} <strong>©</strong> <span style="color:white; cursor: pointer"
+                                                                      @click="openInNewTab('http://www.linkedin.com/in/anatoliy-vazhenin-10bb9695')">avazhenin</span>
             </v-col>
           </v-row>
         </v-col>
       </v-row>
     </v-footer>
 
+    <v-snackbar
+      v-model="snackbar"
+      :multi-line="true"
+      :timeout="snackbarDur"
+      :vertical="true"
+      light
+    >
+      {{ snackbarText }}
+
+      <template v-slot:action="{ attrs }">
+        <v-btn
+          color="red"
+          text
+          v-bind="attrs"
+          @click="deactivateSnackBar"
+        >
+          Закрыть
+        </v-btn>
+      </template>
+    </v-snackbar>
   </v-app>
 </template>
 
@@ -142,11 +166,25 @@
 import PhoneButton from "../components/PhoneButton";
 import ScrollTopButton from "../components/ScrollTopButton";
 import ListPages from "../components/ListPages";
+import Notifications from "../components/Notifications";
 
 export default {
 
-  components: {ListPages, ScrollTopButton, PhoneButton},
+  components: {Notifications, ListPages, ScrollTopButton, PhoneButton},
   computed: {
+    snackbar: {
+      get: function () {
+        return this.$store.state.constants.showSnack;
+      },
+      set: function () {
+      }
+    },
+    snackbarText() {
+      return this.$store.state.constants.errorMessage
+    },
+    snackbarDur() {
+      return this.$store.state.constants.snackbarDuration
+    },
     menu() {
       return this.$store.state.store.menulist;
     },
@@ -196,6 +234,9 @@ export default {
       setTimeout(() => {
         this.$vuetify.goTo(document.body.scrollHeight)
       }, 200)
+    },
+    deactivateSnackBar() {
+      this.$store.dispatch('constants/setClearError');
     }
   },
   created() {

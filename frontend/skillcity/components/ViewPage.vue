@@ -4,7 +4,7 @@
       <v-col class="text-h4 text-center ma-2">{{ show_page.name }}</v-col>
       <v-col class="text-center ma-2">{{ show_page.dscr }}</v-col>
       <v-col class="d-flex justify-center">
-        <v-img :src="'https://skillcity.kz/uploads/'+show_page.image" max-height="500px" width="200px" contain/>
+        <v-img :src="apiURL+'/uploads/'+show_page.image" max-height="500px" width="200px" contain/>
       </v-col>
     </v-col>
     <v-col class="d-block justify-center col-12 col-md-8">
@@ -14,7 +14,7 @@
                 style="white-space:pre-wrap; word-wrap:break-word;">
           </span>
           <v-img v-if="isPicture(page_content.content_type)"
-                 :src="'https://skillcity.kz/uploads/'+page_content.text"
+                 :src="apiURL+'/uploads/'+page_content.text"
                  style="max-height: 400px; max-width: 400px"
           />
           <YouTubeVideoEmbed :url="page_content.text"/>
@@ -34,6 +34,11 @@ export default {
     show_page: {},
     show_page_content: []
   },
+  data() {
+    return {
+      apiURL: process.env.api_base_url
+    }
+  },
   methods: {
     closeDialog() {
       this.$emit('closeDialog')
@@ -47,7 +52,6 @@ export default {
       return false;
     }
   },
-
 }
 </script>
 

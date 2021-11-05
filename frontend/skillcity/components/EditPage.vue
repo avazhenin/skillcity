@@ -44,7 +44,7 @@
                          class="align-baseline"
                          :contain="true"
                          v-if="!files"
-                         :src="`https://skillcity.kz/uploads/`+page.image"
+                         :src="apiURL+`/uploads/`+page.image"
                   />
                   <v-img id="img1"
                          class="align-baseline"
@@ -193,6 +193,7 @@ export default {
   },
   data() {
     return {
+      apiURL:process.env.api_base_url,
       scollingAreaHeight: 0,
       dialog: false,
       name: '',

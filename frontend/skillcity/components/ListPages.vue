@@ -10,7 +10,7 @@
     </v-btn>
 
     <v-col v-if="!links_only" class="col-12 pa-0 ma-0">
-      <v-row justify="center" >
+      <v-row justify="center">
         <v-col cols="auto"
                v-for="page in pages"
                :key="page.id"
@@ -21,7 +21,7 @@
           <v-card id="object_page"
                   style="cursor: pointer"
                   class="ma-1">
-            <v-img id="page_img" :src="`https://skillcity.kz/uploads/`+page.image"/>
+            <v-img id="page_img" :src="apiURL+'/uploads/'+page.image"/>
             <v-card-subtitle>{{ page.name }}</v-card-subtitle>
             <v-card-text>{{ page.dscr }}</v-card-text>
             <v-card-actions v-if="isAdmin()">
@@ -87,6 +87,7 @@ export default {
   },
   data() {
     return {
+      apiURL:process.env.api_base_url,
       dialog: false,
       temp_page: {},
     }

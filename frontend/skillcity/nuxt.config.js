@@ -25,6 +25,7 @@ export default {
   },
 
   env: {
+    api_base_url: process.env.AXIOS_BASE_URL,
     page_type: {
       news: 'news',
       about: 'about',
@@ -37,7 +38,9 @@ export default {
       text: 'text',
       picture: 'picture',
       youtube: 'youtube',
-    }
+    },
+    notification_status: {new: 0, viewed: 1},
+    notification_type: {call_request: 'Обратный звонок'}
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css

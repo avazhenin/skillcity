@@ -10,7 +10,7 @@ import java.util.Date;
 @Table(name = "notifications")
 public class NotificationsModel {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     @Column
     private String type;
@@ -20,6 +20,8 @@ public class NotificationsModel {
     private Date viewed_date;
     @Column
     private int status;
-    @Column
-    private Long parent_id; // Notified object id (REQUESTS.ID for example)
+    @Column(name = "cell_phone")
+    private String cell_phone;
+    @Column(name = "email")
+    private String email;
 }
