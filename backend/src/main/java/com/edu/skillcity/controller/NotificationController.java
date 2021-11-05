@@ -32,7 +32,6 @@ public class NotificationController {
                 notificationsRepository.save(notificationsModel);
             } else {
                 NotificationsModel model = notificationsRepository.findById(notificationsModel.getId()).get();
-                System.out.println("notificationsModel.getStatus()="+notificationsModel.getStatus());
                 model.setStatus(notificationsModel.getStatus());
                 notificationsRepository.save(model);
             }
