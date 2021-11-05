@@ -7,7 +7,6 @@ services:
     build:    
       context: ./frontend/skillcity
       dockerfile: Dockerfile    
-    env_file: ./frontend/skillcity/env.list
     ports:
       - "2222:3000"     
     depends_on: 
