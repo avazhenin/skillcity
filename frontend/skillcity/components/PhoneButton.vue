@@ -76,7 +76,7 @@ export default {
 
 @media screen and (max-width: 400px) {
   .float {
-    right: 10px !important;
+    right: 20px !important;
     width: 45px !important;
     height: 45px !important;
   }

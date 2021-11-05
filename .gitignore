@@ -1,0 +1,5 @@
+volumes/**
+backend/target/**
+backend/.idea/**
+backend/.mvn/**
+frontend/skillcity/node_modules/**

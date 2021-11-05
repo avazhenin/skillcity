@@ -25,10 +25,6 @@
       </template>
 
       <v-card>
-        <v-card-title class="text-h5 grey lighten-2">
-          Уведомления
-        </v-card-title>
-
         <v-data-table
           :headers="notificationsHeaders"
           :items="notifications"
@@ -47,11 +43,11 @@
           </template>
           <template v-slot:top>
             <v-toolbar flat>
-              <v-toolbar-title>Expandable Table</v-toolbar-title>
+              <v-toolbar-title>Уведомления</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-switch
                 v-model="singleExpand"
-                label="Single expand"
+                label="Раскрывать по одному"
                 class="mt-2"
               ></v-switch>
             </v-toolbar>

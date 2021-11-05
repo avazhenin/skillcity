@@ -36,6 +36,8 @@
         <v-app-bar-nav-icon v-if="!drawer" @click="drawer = !drawer" :color="pickColor('#000000','#faf9f9')"
                             class="d-flex d-md-none"></v-app-bar-nav-icon>
 
+        <v-spacer/>
+
         <v-col cols="auto">
           <v-toolbar-title
             style="cursor: pointer"
@@ -57,10 +59,9 @@
           <v-btn class="ma-0 pa-0" v-if="s.active" icon v-for="s in social" :key="s.link" @click="openInNewTab(s.link)">
             <v-icon :color="pickColor('#000000','#faf9f9')">{{ s.name }}</v-icon>
           </v-btn>
-        </v-col>
-        <v-col class="d-none d-md-flex" v-if="$store.getters['store/isAdmin']">
           <Notifications :bell_color="pickColor('#000000','#faf9f9')"/>
         </v-col>
+        <v-spacer/>
       </v-row>
     </v-app-bar>
 
