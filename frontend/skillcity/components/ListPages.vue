@@ -9,21 +9,20 @@
       {{ page.name }}
     </v-btn>
 
-    <v-col v-if="!links_only" class="col-12 pa-0 ma-0">
+    <v-col v-if="!links_only" class="col-12 col-md-8 pa-0 ma-0">
       <v-row justify="center">
         <v-col cols="auto"
                v-for="page in pages"
                :key="page.id"
                class="d-flex justify-center ma-1"
-               style="min-width: 200px"
+               style="min-width: 200px; max-width: 200px"
                @click.stop="viewPage(page)">
 
           <v-card id="object_page"
                   style="cursor: pointer"
                   class="ma-1">
             <v-img id="page_img" :src="apiURL+'/uploads/'+page.image"/>
-            <v-card-subtitle>{{ page.name }}</v-card-subtitle>
-            <v-card-text>{{ page.dscr }}</v-card-text>
+            <v-card-subtitle class="text-center">{{ page.name }}</v-card-subtitle>
             <v-card-actions v-if="isAdmin()">
               <EditPage :page="page"/>
               <v-spacer/>
@@ -87,7 +86,7 @@ export default {
   },
   data() {
     return {
-      apiURL:process.env.api_base_url,
+      apiURL: process.env.api_base_url,
       dialog: false,
       temp_page: {},
     }
