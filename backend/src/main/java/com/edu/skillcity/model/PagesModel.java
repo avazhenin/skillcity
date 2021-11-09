@@ -18,7 +18,7 @@ public class PagesModel {
     private Long id;
     @Column(name = "name")
     private String name;
-    @Column(name = "dscr")
+    @Column(name = "dscr", columnDefinition = "TEXT")
     private String dscr;
     @Column(name = "image")
     private String image;
