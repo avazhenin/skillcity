@@ -3,6 +3,7 @@
     <!-- Use the component in the right place of the template -->
     <tiptap-vuetify @input="$emit('input', content)"
                     v-model="content"
+                    class="text-left"
                     :extensions="extensions"
                     :card-props="{ flat: true }"
     />

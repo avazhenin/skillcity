@@ -6,16 +6,16 @@
         <v-list-item v-for="content in page_content"
                      :key="content.id" class="pa-0 ma-0 justify-center"
         >
-          <v-sheet width="100%" elevation="3" rounded :class="($store.getters['store/isAdmin']?' white ':' ')+' ma-1 pa-1'">
+          <v-sheet width="100%" elevation="3" rounded
+                   :class="($store.getters['store/isAdmin']?' white ':' ')+' ma-1 pa-1'">
             <v-row no-gutters class="d-block">
-              <v-col class="text-center justify-center align-center">
+              <v-col class="justify-center align-center">
                 <v-list-item-content v-if="content.content_type==page_content_type.text && content.edit_fl==0">
-                  <span v-html="content.text"/>
-
+                  <span class="text-left" v-html="content.text"/>
                 </v-list-item-content>
 
-                <Editor v-if="content.content_type==page_content_type.text && content.edit_fl==1" class="ma-1"
-                        v-model="page_object.text" :set_value="content.text"/>
+                <Editor v-if="content.content_type==page_content_type.text && content.edit_fl==1 && (page_object.id && page_object.id == content.id)" class="ma-1"
+                  v-model="page_object.text" :set_value="content.text"/>
 
                 <v-list-item-content v-if="content.content_type==page_content_type.picture">
                   <v-img :src="(file && page_object.id == content.id)?url:apiURL+`/uploads/`+content.text"
@@ -78,7 +78,7 @@ export default {
   },
   data() {
     return {
-      apiURL:process.env.api_base_url,
+      apiURL: process.env.api_base_url,
       page_object: {},
       file: null
     }
@@ -96,7 +96,7 @@ export default {
     content_edit(page) {
       this.page_object = JSON.parse(JSON.stringify(page)); // клонируем объект
       this.page_object.edit_fl = 1 // меняем значение
-      this.$store.commit('about/CONTENT_SET_DATA', this.page_object) // меняем значение в vuex
+      this.$store.commit(this.page.page_type + '/CONTENT_SET_DATA', this.page_object) // меняем значение в vuex
     },
     content_save() {
       this.page_object.edit_fl = 0 // меняем значение
