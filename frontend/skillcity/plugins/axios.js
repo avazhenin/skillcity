@@ -11,10 +11,10 @@ export default function ({app, $axios, store, env}, inject) {
   }
 
   function showError(error) {
-    console.log(error.response)
     if (error.response) {
       store.dispatch('constants/setErrorCode', error.response.data.error)
-      store.dispatch('constants/setErrorMessage', error.response.data.message)
+      if (error.response.data.cause) store.dispatch('constants/setErrorMessage', error.response.data.cause.message)
+      if (!error.response.data.cause) store.dispatch('constants/setErrorMessage', error.response.data.message)
       store.dispatch('constants/setShowSnackbar', true)
       store.dispatch('constants/setSnackbarDur', 10 * 1000)
       if (error.response.status === 401) {
@@ -25,7 +25,7 @@ export default function ({app, $axios, store, env}, inject) {
       store.dispatch('constants/setErrorMessage', error)
       store.dispatch('constants/setShowSnackbar', true)
     }
-    console.log('error=' + error)
+
     throw error;
   }
 
@@ -163,8 +163,6 @@ export default function ({app, $axios, store, env}, inject) {
       formData.append(key, page_content[key]);
     }
     if (page_content.content_type == env.page_content_type.picture) formData.append('file', file);
-
-    console.log(formData)
 
     const result = $axios.post('/page/content/edit_data', formData)
       .then(response => {
