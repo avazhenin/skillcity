@@ -21,8 +21,12 @@ public class NotificationController {
     }
 
     @GetMapping("find")
-    public NotificationsModel GetRequest(@RequestParam("id") Long request_id) {
-        return notificationsRepository.findById(request_id).get();
+    public ResponseEntity<NotificationsModel> GetRequest(@RequestParam("id") Long request_id) {
+        try {
+            return new ResponseEntity(notificationsRepository.findById(request_id).get(), HttpStatus.OK);
+        }catch (Exception e){
+            return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @RequestMapping("add")
@@ -37,7 +41,7 @@ public class NotificationController {
             }
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.OK);
+            return new ResponseEntity(e.getCause(), HttpStatus.OK);
         }
     }
 }

@@ -33,7 +33,7 @@ public class PageContentController {
         try {
             return new ResponseEntity(pagesService.addPageContent(pageContentDTO), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -43,13 +43,17 @@ public class PageContentController {
         try {
             return new ResponseEntity(pagesService.savePageData(pageContentDTO), HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @RequestMapping("delete")
     public ResponseEntity deleteText(@RequestParam("id") PageContentModel pageContentModel) {
-        pagesService.removePageText(pageContentModel);
-        return new ResponseEntity<>(HttpStatus.OK);
+        try {
+            pagesService.removePageText(pageContentModel);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 }
