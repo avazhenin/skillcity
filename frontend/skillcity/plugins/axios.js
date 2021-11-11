@@ -12,11 +12,8 @@ export default function ({app, $axios, store, env}, inject) {
 
   function showError(error) {
     if (error.response) {
-      store.dispatch('constants/setErrorCode', error.response.data.error)
-      if (error.response.data.cause) store.dispatch('constants/setErrorMessage', error.response.data.cause.message)
-      if (!error.response.data.cause) store.dispatch('constants/setErrorMessage', error.response.data.message)
-      store.dispatch('constants/setShowSnackbar', true)
-      store.dispatch('constants/setSnackbarDur', 10 * 1000)
+      store.dispatch('constants/setErrorInfo', error.response.data)
+      store.dispatch('constants/setShowErrorDialog', true)
       if (error.response.status === 401) {
         if (LocalStoragetoken) store.commit('store/set_token', undefined);
         forward2LoginPage()
@@ -25,7 +22,6 @@ export default function ({app, $axios, store, env}, inject) {
       store.dispatch('constants/setErrorMessage', error)
       store.dispatch('constants/setShowSnackbar', true)
     }
-
     throw error;
   }
 

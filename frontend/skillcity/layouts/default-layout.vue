@@ -140,11 +140,50 @@
       </v-row>
     </v-footer>
 
+    <v-dialog v-model="error_dialog">
+      <v-card>
+        <v-card-text>
+          <v-row no-gutters>
+            <v-col cols="2">STATUS</v-col>
+            <v-col>{{ error_info.status }}</v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col cols="2">CODE</v-col>
+            <v-col>{{ error_info.code }}</v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col cols="2">DATA</v-col>
+            <v-col>{{ error_info.data }}</v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col cols="2">MESSAGE</v-col>
+            <v-col>{{ error_info.message }}</v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col cols="2">CAUSE</v-col>
+            <v-col>{{ error_info.cause }}</v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col cols="2">TIMESTAMP</v-col>
+            <v-col>{{ error_info.timestamp }}</v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-col cols="2">STACKTRACE</v-col>
+            <v-col>{{ error_info.stackTrace }}</v-col>
+          </v-row>
+        </v-card-text>
+        <v-card-actions>
+          <v-btn @click="deactivateErrorDialog">Закрыть</v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
+
     <v-snackbar
       v-model="snackbar"
       :multi-line="true"
       :timeout="snackbarDur"
       :vertical="true"
+      max-width="500px"
       light
     >
       {{ snackbarText }}
@@ -180,8 +219,18 @@ export default {
       set: function () {
       }
     },
+    error_dialog: {
+      get: function () {
+        return this.$store.state.constants.showErrorDialog;
+      },
+      set: function () {
+      }
+    },
+    error_info() {
+      return this.$store.getters['constants/getCurrentError']
+    },
     snackbarText() {
-      return this.$store.state.constants.errorMessage
+      return this.$store.getters["constants/getSnackBarText"]
     },
     snackbarDur() {
       return this.$store.state.constants.snackbarDuration
@@ -237,7 +286,12 @@ export default {
       }, 200)
     },
     deactivateSnackBar() {
-      this.$store.dispatch('constants/setClearError');
+      this.$store.dispatch('constants/setSnackBarText');
+      this.$store.dispatch('constants/setShowSnackbar', false);
+    },
+    deactivateErrorDialog() {
+      this.$store.dispatch('constants/setShowErrorDialog', false)
+      this.$store.dispatch('constants/setClearError')
     }
   },
   created() {

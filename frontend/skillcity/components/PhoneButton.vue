@@ -53,7 +53,7 @@ export default {
       }
       try {
         this.$add_set_notification(payload)
-        this.$store.dispatch('constants/setErrorMessage', 'Мы обязательно свяжемся с вами!')
+        this.$store.dispatch('constants/setSnackBarText', 'Мы обязательно свяжемся с вами!')
         this.$store.dispatch('constants/setSnackbarDur', 5 * 1000)
         this.$store.dispatch('constants/setShowSnackbar', true)
       } catch (error) {

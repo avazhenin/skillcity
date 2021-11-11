@@ -1,7 +1,7 @@
 package com.edu.skillcity.controller;
 
 import com.edu.skillcity.dto.PageContentDTO;
-import com.edu.skillcity.dto.PageDTO;
+import com.edu.skillcity.exceptions.CustomException;
 import com.edu.skillcity.model.PageContentModel;
 import com.edu.skillcity.service.PagesService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,8 +32,8 @@ public class PageContentController {
     public ResponseEntity<PageContentModel> addContent(@ModelAttribute PageContentDTO pageContentDTO) {
         try {
             return new ResponseEntity(pagesService.addPageContent(pageContentDTO), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception ex) {
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Ошибка при обработке запроса add_content", ex.getMessage(), ex.getCause().getCause().getMessage());
         }
     }
 
@@ -42,8 +42,8 @@ public class PageContentController {
     public ResponseEntity<PageContentModel> changeText(@ModelAttribute PageContentDTO pageContentDTO) {
         try {
             return new ResponseEntity(pagesService.savePageData(pageContentDTO), HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception ex) {
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Ошибка при обработке запроса edit_data", ex.getMessage(), ex.getCause().getCause().getMessage());
         }
     }
 
@@ -52,8 +52,8 @@ public class PageContentController {
         try {
             pagesService.removePageText(pageContentModel);
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception ex) {
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Ошибка при обработке запроса delete", ex.getMessage(), ex.getCause().getCause().getMessage());
         }
     }
 }

@@ -1,5 +1,6 @@
 package com.edu.skillcity.controller;
 
+import com.edu.skillcity.exceptions.CustomException;
 import com.edu.skillcity.model.NotificationsModel;
 import com.edu.skillcity.repo.NotificationsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +25,8 @@ public class NotificationController {
     public ResponseEntity<NotificationsModel> GetRequest(@RequestParam("id") Long request_id) {
         try {
             return new ResponseEntity(notificationsRepository.findById(request_id).get(), HttpStatus.OK);
-        }catch (Exception e){
-            return new ResponseEntity(e.getCause(), HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (Exception ex) {
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Ошибка при обработке запроса find", ex.getMessage(), ex.getCause().getCause().getMessage());
         }
     }
 
@@ -40,8 +41,8 @@ public class NotificationController {
                 notificationsRepository.save(model);
             }
             return new ResponseEntity<>(HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e.getCause(), HttpStatus.OK);
+        } catch (Exception ex) {
+            throw new CustomException(HttpStatus.INTERNAL_SERVER_ERROR, "Ошибка при обработке запроса add", ex.getMessage(), ex.getCause().getCause().getMessage());
         }
     }
 }
